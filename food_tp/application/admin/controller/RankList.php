@@ -13,7 +13,7 @@ use think\Db;
 
 class RankList extends Controller
 {
-    // 排行榜页面，根据 value 从高到低排序
+    // 排行榜页面，根据 value 从低到高排序
     public function index()
     {
         $sum = 1;
@@ -28,14 +28,14 @@ class RankList extends Controller
             $nutrient = $_GET['nutrient'];
             $list = Db::table('foods_nutrient')
                 ->where('name', $nutrient)
-                ->order('value', 'desc')
+                ->order('value', 'asc')
                 ->limit($start, $length)
                 ->field('foods_id, value')
                 ->select();
         } else {
             // nutrient 为空默认查询所有 nutrient
             $list = Db::table('foods_nutrient')
-                ->order('value', 'desc')
+                ->order('value', 'asc')
                 ->limit($start, $length)
                 ->field('foods_id, value')
                 ->select();

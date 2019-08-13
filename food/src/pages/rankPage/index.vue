@@ -20,12 +20,19 @@ export default {
       sum: 1
     }
   },
-  onHide: function () {
-    this.sum = 1
+  computed: {
+    takeSum () {
+      return store.state.sum
+    }
+  },
+  watch: {
+    takeSum (val) {
+      this.sum = val
+    }
   },
   onReachBottom: function () {
     var that = this
-    that.sum++
+    store.commit('changeSum', ++that.sum)
     var fenyeRank = store.state.fenyeRank
     that.$http.get(that.$admin + "/index.php/admin/rank_list", {
       sum: that.sum,

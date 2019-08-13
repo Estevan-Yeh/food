@@ -20,7 +20,9 @@ export default new Vuex.Store({
     },
     fenyeRank: {
       nutrient: ''
-    }
+    },
+    sum: 1,
+    categorySum: 1
   },
   mutations: {
     changeFiltrateListIndex(state, value) {
@@ -58,6 +60,12 @@ export default new Vuex.Store({
     },
     changeFenyeRankNutrient(state, value) {
       state.fenyeCategory.nutrient = value
+    },
+    changeSum(state, value) {
+      state.sum = value
+    },
+    changeCategorySum(state, value) {
+      state.categorySum = value
     }
   },
   getters: {

@@ -17,16 +17,23 @@ export default {
             sum: 1
         }
     },
+    computed: {
+        takeSum () {
+            return store.state.categorySum
+        }
+    },
+    watch: {
+        takeSum (val) {
+            this.sum = val
+        }
+    },
     components: {
         Filtrate,
         RankListCategory
     },
-    onHide: function () {
-        this.sum = 1
-    },
     onReachBottom: function () {
         var that = this
-        that.sum++
+        store.commit('changeCategorySum', ++that.sum)
         var fenyeCategory = store.state.fenyeCategory
         that.$http.get(that.$admin + "/index.php/admin/nutrient_list", {
             sum: that.sum,
@@ -39,15 +46,22 @@ export default {
         })
     },
     mounted: function () {
+        var that = this
         var pages = getCurrentPages() //获取加载的页面
         var currentPage = pages[pages.length - 1] //获取当前页面的对象
         var url = currentPage.route //当前页面url
         var category = currentPage.options.category //如果要获取url中所带的参数可以查看options
         store.commit('changeFenyeCategoryCategory', category)
+        store.commit('changeCategorySum', 1)
         console.log('category', category)
+
+        wx.setNavigationBarTitle({
+            title: category
+        })
+
         // category = { category: category }
 
-        var that = this
+
         // that.$http.post(that.$admin + "/index.php/admin/index/category", that.$qs.stringify({ 'category': category })).then((res) => {
         //     console.log('res', res.data)
         // })

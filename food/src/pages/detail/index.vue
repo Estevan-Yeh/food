@@ -14,7 +14,7 @@
           </div>
           <img
             class="icon"
-            src="/static/images/user.png"
+            src="/static/images/exm_2.png"
           >
         </div>
         <div class="dcc-tip">
@@ -186,7 +186,8 @@ export default {
     this.tab = this.detail.tab[this.tabIndex]
   },
   mounted () {
-    this.setCanvas()
+    var that = this
+    that.setCanvas()
   },
   methods: {
     tapIndex: function (index) {
@@ -348,8 +349,8 @@ canvas {
   margin-top: 14rpx;
 }
 .dcc-flex img.icon {
-  width: 40rpx;
-  height: 40rpx;
+  width: 80rpx;
+  height: 80rpx;
   align-self: flex-start;
 }
 .dcc-tip {

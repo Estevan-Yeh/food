@@ -1,9 +1,15 @@
 <template>
   <div>
     <div class="index-header">
+      <div class="index-bg">
+        <image
+          src="/static/images/bg.jpg"
+          mode="widthFix"
+        />
+      </div>
       <div class="index-title">
-        <img src="/static/images/exm.png">
-        <span>健康出品</span>
+        <img src="/static/images/eat.png">
+        <span>吃哇</span>
       </div>
       <div class="input-search">
         <icon
@@ -28,7 +34,7 @@
         :key="index"
       >
         <div @tap="toCategory(index)">
-          <div class="table-img-box"><img src="/static/images/user.png"></div>
+          <div class="table-img-box"><img :src="img[index]"></div>
           <div class="table-txt">{{item}}</div>
         </div>
       </block>
@@ -41,7 +47,19 @@ import store from '@/store/store'
 export default {
   data: function () {
     return {
-      indexTable: []
+      indexTable: [],
+      img: [
+        "/static/images/crop.png",
+        "/static/images/meat.png",
+        "/static/images/milk.png",
+        "/static/images/greens.png",
+        "/static/images/nut.png",
+        "/static/images/drinks.png",
+        "/static/images/oil.png",
+        "/static/images/condiment.png",
+        "/static/images/snack.png",
+        "/static/images/others.png"
+      ]
     }
   },
   created: function () {
@@ -69,11 +87,16 @@ export default {
 </script>
 
 <style scoped>
+.index-bg {
+  position: absolute;
+  z-index: -1;
+}
+.index-bg img {
+  width: 100%;
+  height: 300rpx;
+}
 .index-header {
   width: 100%;
-  /* height: 288rpx; */
-  background-color: #459b57;
-  /* filter: blur(20rpx); */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,6 +119,8 @@ export default {
   margin-top: 16rpx;
   background-color: #fff;
   padding: 10rpx 16rpx;
+  opacity: 0.83;
+  border-radius: 40rpx;
 }
 .input-search icon {
   margin-right: 10rpx;
@@ -116,23 +141,23 @@ export default {
 .index-table > div {
   text-align: center;
   min-width: 33.33%;
-  margin-top: 30rpx;
+  margin-top: 54rpx;
 }
 .table-img-box {
-  padding: 26rpx 0;
+  padding: 34rpx 0;
   border-radius: 100%;
   width: 138rpx;
-  border: 1rpx solid #e5e5e5;
+  border: 1rpx solid #eee8e8;
   margin: 0 auto;
   text-align: center;
   margin-bottom: 10rpx;
 }
 .table-img-box img {
-  width: 72rpx;
-  height: 72rpx;
+  width: 56rpx;
+  height: 56rpx;
 }
 .table-txt {
-  font-size: 22rpx;
-  padding-left: 6rpx;
+  font-size: 24rpx;
+  padding-left: 2rpx;
 }
 </style>

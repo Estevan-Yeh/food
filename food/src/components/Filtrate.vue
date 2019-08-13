@@ -73,18 +73,34 @@ export default {
       // 默认不展示排列方式（高到低 or 低到高），初始排列方式按 id
       arrange: false,
       // 真为升序
-      arrangeTxt: true
+      arrangeTxt: true,
+      filtrateTitle: ''
     }
   },
   computed: {
     filtrateList () {
       return store.state.filtrate.filtrateList
     },
+    index () {
+      return this.filtrate.filtrateListIndex
+    },
+    atitle () {
+      return this.filtrateTitle
+    }
   },
   watch: {
     filtrateList (val) {
       this.filtrate.filtrateList = val
       // console.log('this.filtrate.filtrateList', this.filtrate.filtrateList)
+    },
+    index (val) {
+      this.filtrateTitle = this.filtrate.filtrateList[val]
+    },
+    atitle (val) {
+      var index = this.filtrate.filtrateListIndex
+      if (val != this.filtrate.filtrateList[index] && index != -1) {
+        this.filtrateTitle = this.filtrate.filtrateList[index]
+      }
     }
   },
   mounted () {
@@ -108,6 +124,9 @@ export default {
       that.unfold = !that.unfold
     },
     tapFiltrateItem: function (index) {
+      store.commit('changeSum', 1)
+      store.commit('changeCategorySum', 1)
+
       var that = this
       that.unfold = false
 
@@ -117,6 +136,7 @@ export default {
 
       var nutrient = that.filtrate.filtrateList[index]
       that.filtrateTitle = nutrient
+      console.log('tag', that.filtrateTitle)
       that.arrangeTxt = true
 
       var fIndex = that.filtrate.filtrateListIndex
@@ -154,6 +174,7 @@ export default {
 
     },
     tapArrange: function () {
+      store.commit('changeCategorySum', 1)
       var that = this
       that.unfold = false
       that.arrangeTxt = !that.arrangeTxt
@@ -167,7 +188,7 @@ export default {
           sort: sort
         }).then((res) => {
           store.commit('changeRankListCategory', res.data)
-          store.commit('changeFenyeCategoryCategory', sort)
+          store.commit('changeFenyeCategorySort', sort)
         })
       }
     }
