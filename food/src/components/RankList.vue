@@ -5,7 +5,10 @@
                 v-for="(item,index) in rankList"
                 :key="index"
             >
-                <div class="rlist-item">
+                <div
+                    class="rlist-item"
+                    @tap="toDetail(index)"
+                >
                     <img :src="item.thumb">
                     <div>{{item.name}}</div>
                 </div>
@@ -24,7 +27,7 @@ export default {
     },
     computed: {
         getval () {
-            return store.state.rankList.list
+            return store.state.rankList
         }
     },
     watch: {
@@ -32,16 +35,26 @@ export default {
             this.rankList = val
         }
     },
-    created: function () {
-        var that = this
-    },
     mounted: function () {
         var that = this
-        that.$http.get(that.$admin + "/index.php/admin/index/rank_list").then((res) => {
+        that.$http.get(that.$admin + "/index.php/admin/rank_list").then((res) => {
             console.log('rankList', res.data)
             store.commit('changeRankList', res.data)
         })
-    }
+    },
+    methods: {
+        toDetail: function (index) {
+            var that = this
+            var foods_id = that.rankList[index].foods_id
+
+            that.$http.get(that.$admin + "/index.php/admin/food_details", {
+                foods_id: foods_id
+            }).then((res) => {
+                store.commit('changeFoodDetails', res.data)
+            })
+            wx.navigateTo({ url: '../detail/main' });
+        }
+    },
 }
 </script>
 

@@ -13,9 +13,9 @@
         :key="index"
       >
         <div class="dm-table-item dm-flex">
-          <div class="dti-name">{{item.name}}</div>
+          <div class="dti-name">{{item.nutrient}}</div>
           <div class="dm-flex_2">
-            <div>{{item.energy}}</div>
+            <div>{{item.energy}}{{item.unit}}</div>
             <div class="dm-table-tip">{{item.tip}}</div>
           </div>
         </div>
@@ -29,16 +29,22 @@ import store from '@/store/store'
 export default {
   data: function () {
     return {
-      list: [
-      ]
+      list: []
     }
   },
-  onShow: function () {
-    this.list = store.state.detailMore
+  computed: {
+    list: function () {
+      return store.state.foodDetails
+    }
   },
-  created () {
-    console.log('tag', '2')
-  }
+  watch: {
+    list: function (val) {
+      this.list = val
+    }
+  },
+  mounted: function () {
+    this.list = store.state.foodDetails
+  },
 }
 </script>
 

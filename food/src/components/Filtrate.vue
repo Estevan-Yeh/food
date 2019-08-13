@@ -63,12 +63,16 @@ export default {
   },
   data: function () {
     return {
+      // 不展开头部 tab
       unfold: false,
-      flUnfold: true,
+      flUnfold: true,  // 下面展开元素 tab
       filtrate: {
-        filtrateList: this.filtrateList
+        filtrateList: this.filtrateList,
+        filtrateListIndex: -1
       },
+      // 默认不展示排列方式（高到低 or 低到高），初始排列方式按 id
       arrange: false,
+      // 真为升序
       arrangeTxt: true
     }
   },
@@ -85,6 +89,14 @@ export default {
   },
   mounted () {
     this.filtrate.filtrateList = this.filtrateList
+  },
+  onShow () {
+    this.arrange = false
+    if (!this.flTitle) {
+      this.filtrate.filtrateListIndex = -1
+      this.unfold = false
+      this.flUnfold = true
+    }
   },
   methods: {
     tapFlTitle: function () {
@@ -103,44 +115,59 @@ export default {
         that.arrange = true
       }
 
-      var name = that.filtrate.filtrateList[index]
-      that.filtrateTitle = name
+      var nutrient = that.filtrate.filtrateList[index]
+      that.filtrateTitle = nutrient
+      that.arrangeTxt = true
 
       var fIndex = that.filtrate.filtrateListIndex
       if (fIndex != index) {
         that.filtrate.filtrateListIndex = index
+        if (that.flTitle)  // 判断是 category 界面还是 rankPage（true）
+          store.commit('changeFenyeRankNutrient', that.filtrate.filtrateList[index])
+        else
+          store.commit('changeFenyeCategoryNutrient', that.filtrate.filtrateList[index])
 
         var pages = getCurrentPages() //获取加载的页面
         var currentPage = pages[pages.length - 1] //获取当前页面的对象
         var url = currentPage.route //当前页面url
         var category = currentPage.options.category //如果要获取url中所带的参数可以查看options
         that.category = category
+        store.commit('changeFenyeCategoryCategory', category)
 
-        if (that.flTitle) { } else {
-          that.$http.get(that.$admin + "/index.php/admin/nutrient_list/child", {
-            name: name,
-            category: category
+        // 接口获取数据：filtrateList, rankList
+        if (that.flTitle) {
+          that.$http.get(that.$admin + "/index.php/admin/rank_list", {
+            nutrient: nutrient
+          }).then((res) => {
+            store.commit('changeRankList', res.data)
+            console.log('rankList', store.state.rankList)
+          })
+        } else {
+          that.$http.get(that.$admin + "/index.php/admin/nutrient_list", {
+            nutrient: nutrient,
+            category: that.category
           }).then((res) => {
             store.commit('changeRankListCategory', res.data)
           })
         }
       }
-      // 接口获取数据：filtrateList, rankList
+
     },
     tapArrange: function () {
       var that = this
       that.unfold = false
       that.arrangeTxt = !that.arrangeTxt
-      var name = that.filtrateTitle != "排列方式" ? that.filtrateTitle : "热量"
+      var nutrient = that.filtrateTitle != "排列方式" ? that.filtrateTitle : ""
       var sort = that.arrangeTxt ? 1 : 0
       // 接口获取数据：rankListCategory
       if (that.flTitle) { } else {
-        that.$http.get(that.$admin + "/index.php/admin/nutrient_list/sort", {
-          name: name,
+        that.$http.get(that.$admin + "/index.php/admin/nutrient_list", {
+          nutrient: nutrient,
           category: that.category,
           sort: sort
         }).then((res) => {
           store.commit('changeRankListCategory', res.data)
+          store.commit('changeFenyeCategoryCategory', sort)
         })
       }
     }

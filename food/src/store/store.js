@@ -6,52 +6,21 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     filtrate: {
-      filtrateList: [
-        'tip_0',
-        'tip_1',
-        'tip_2',
-        'tip_3',
-        'tip_4',
-        'tip_5',
-        'tip_6',
-        'tip_7',
-        'tip_8'
-      ],
+      filtrateList: [],
       filtrateListIndex: -1
     },
-    rankList: {
-      type: '',
-      list: [
-        {
-          img: '/static/images/user.png',
-          name:
-            '低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类低GI-主食类',
-          energy: 112
-        },
-        {
-          img: '/static/images/user.png',
-          name: '低GI-主食类',
-          energy: 112
-        },
-        {
-          img: '/static/images/user.png',
-          name: '低GI-主食类',
-          energy: 112
-        },
-        {
-          img: '/static/images/user.png',
-          name: '低GI-主食类',
-          energy: 112
-        },
-        {
-          img: '/static/images/user.png',
-          name: '低GI-主食类',
-          energy: 112
-        }
-      ]
-    },
+    rankList: [],
     rankListCategory: [],
-    detailMore: []
+    foodDetails: [],
+    detailMore: [],
+    fenyeCategory: {
+      category: '',
+      nutrient: '',
+      sort: ''
+    },
+    fenyeRank: {
+      nutrient: ''
+    }
   },
   mutations: {
     changeFiltrateListIndex(state, value) {
@@ -64,10 +33,31 @@ export default new Vuex.Store({
       state.rankListCategory = value
     },
     changeRankList(state, value) {
-      state.rankList.list = value
+      state.rankList = value
     },
     changeDetailMore(state, value) {
       state.detailMore = value
+    },
+    changeFoodDetails(state, value) {
+      state.foodDetails = value
+    },
+    changeFenyeCategoryNutrient(state, value) {
+      state.fenyeCategory.nutrient = value
+    },
+    changeFenyeCategoryCategory(state, value) {
+      state.fenyeCategory.category = value
+    },
+    changeFenyeCategorySort(state, value) {
+      state.fenyeCategory.sort = value
+    },
+    changeFenyeRankListCategory(state, value) {
+      state.rankListCategory = state.rankListCategory.concat(value)
+    },
+    changeFenyeRankList(state, value) {
+      state.rankList = state.rankList.concat(value)
+    },
+    changeFenyeRankNutrient(state, value) {
+      state.fenyeCategory.nutrient = value
     }
   },
   getters: {

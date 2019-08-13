@@ -51,6 +51,10 @@ export default {
       console.log('filtrate', that.indexTable)
       // store.commit('changeFiltrateList', res.data)
     })
+    that.$http.get(that.$admin + "/index.php/admin/nutrient_list").then((res) => {
+      console.log('nutrientList', res.data)
+      store.commit('changeFiltrateList', res.data)
+    })
   },
   methods: {
     toCategory: function (index) {

@@ -7,14 +7,14 @@
       >
         <div
           class="rlc-item"
-          @tap="toDetail"
+          @tap="toDetail(index)"
         >
           <img :src="item.thumb">
           <div>
             <div>
               <div class="rlc-name">{{item.name}}</div>
               <div class="rlc-tip">
-                <span>{{item.energy}}</span>千卡/100克</div>
+                <span>{{item.energy}}</span>{{item.unit}}/100克</div>
             </div>
             <img src="/static/images/exm.png">
           </div>
@@ -41,7 +41,15 @@ export default {
     this.rankListCategory = store.state.rankListCategory
   },
   methods: {
-    toDetail: function () {
+    toDetail: function (index) {
+      var that = this
+      var foods_id = that.rankListCategory[index].foods_id
+
+      that.$http.get(that.$admin + "/index.php/admin/food_details", {
+        foods_id: foods_id
+      }).then((res) => {
+        store.commit('changeFoodDetails', res.data)
+      })
       wx.navigateTo({ url: '../detail/main' });
     }
   },

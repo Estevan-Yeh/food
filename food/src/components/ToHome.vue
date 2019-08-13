@@ -23,10 +23,13 @@ export default {
 .tohome {
   background-color: #f86f5a;
   position: fixed;
-  right: 100rpx;
-  bottom: 200rpx;
+  right: 62rpx;
+  bottom: 258rpx;
   border-radius: 100%;
-  padding: 30rpx;
+  padding-bottom: 22rpx;
+  padding-left: 28rpx;
+  padding-top: 30rpx;
+  padding-right: 28rpx;
 }
 .tohome img {
   width: 60rpx;

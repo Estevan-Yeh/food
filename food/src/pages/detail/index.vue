@@ -70,7 +70,7 @@
     </div>
 
     <div class="detail-exercise">
-      <img src="/static/images/user.png">
+      <img :src="detail.img">
       <div>
         <div class="detail-exercise_1">消耗 <span>{{tab.title}}</span>{{detail.name}}的热量</div>
         <div>需要 <span>{{tab.exercise}}</span></div>
@@ -160,6 +160,26 @@ export default {
       },
       tab: {},
       energy: 0
+    }
+  },
+  computed: {
+    foodName: function () {
+      return store.state.foodDetails
+    }
+  },
+  watch: {
+    foodName: function (val) {
+      var that = this.detail
+      that.name = val[0].name
+      that.img = val[0].thumb
+
+      var index = 0
+      while (val[index].nutrient != '热量') {
+        index++;
+      }
+
+      that.energy_0 = val[index].energy
+      that.energy_1 = that.energy_0 / 10
     }
   },
   created () {
@@ -385,8 +405,10 @@ canvas {
   padding-right: 38rpx;
 }
 .detail-exercise img {
-  width: 160rpx;
-  height: 160rpx;
+  width: 150rpx;
+  height: 150rpx;
+  margin: 20rpx;
+  border-radius: 6rpx;
 }
 .detail-exercise_1 {
   margin-bottom: 14rpx;
