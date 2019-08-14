@@ -107,11 +107,13 @@ export default {
     this.filtrate.filtrateList = this.filtrateList
   },
   onShow () {
-    this.arrange = false
-    if (!this.flTitle) {
+    if (this.filtrateTitle != '排列方式' && !this.flTitle)
+      this.arrange = true
+    if (!this.flTitle && store.state.test == 0) {
       this.filtrate.filtrateListIndex = -1
       this.unfold = false
       this.flUnfold = true
+      this.arrange = false
     }
   },
   methods: {

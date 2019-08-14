@@ -10,17 +10,64 @@
         <input
           type="text"
           focus="true"
+          :value="searchText"
           confirm-type="search"
+          @confirm="confirm"
+          @input="getValue"
         >
       </div>
-      <div class="qingkong">清空</div>
+      <div
+        class="qingkong"
+        @tap="clearInput"
+      >清空</div>
     </div>
+
+    <search-list></search-list>
   </div>
 </template>
 
 <script>
-export default {
+import store from '@/store/store'
+import SearchList from '@/components/searchList'
 
+export default {
+  data () {
+    return {
+      searchText: '',
+      sum: 1
+    }
+  },
+  components: {
+    SearchList
+  },
+  mounted () {
+    this.sum = 1
+  },
+  methods: {
+    confirm () {
+      var that = this
+      that.$http.get(that.$admin + "/index.php/admin/search", {
+        search: that.searchText
+      }).then((res) => {
+        if (res.data == 0) {
+          wx.showToast({
+            title: '搜索不到呢......',
+            icon: "none",
+            duration: 1000
+          })
+        } else
+          store.commit('changeSearchList', res.data)
+      })
+    },
+    getValue (e) {
+      var that = this
+      that.searchText = e.mp.detail.value
+    },
+    clearInput () {
+      this.searchText = ''
+      store.commit('changeSearchList', [])
+    }
+  },
 }
 </script>
 

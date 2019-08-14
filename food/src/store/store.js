@@ -11,6 +11,7 @@ export default new Vuex.Store({
     },
     rankList: [],
     rankListCategory: [],
+    searchList: [],
     foodDetails: [],
     detailMore: [],
     fenyeCategory: {
@@ -22,9 +23,13 @@ export default new Vuex.Store({
       nutrient: ''
     },
     sum: 1,
-    categorySum: 1
+    categorySum: 1,
+    test: 0
   },
   mutations: {
+    changeTest(state, value) {
+      state.test = value
+    },
     changeFiltrateListIndex(state, value) {
       state.filtrate.filtrateListIndex = value
     },
@@ -33,6 +38,9 @@ export default new Vuex.Store({
     },
     changeRankListCategory(state, value) {
       state.rankListCategory = value
+    },
+    changeSearchList(state, value) {
+      state.searchList = value
     },
     changeRankList(state, value) {
       state.rankList = value

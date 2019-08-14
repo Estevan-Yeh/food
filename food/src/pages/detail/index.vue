@@ -100,14 +100,14 @@ export default {
       detail: {
         img: '/static/images/user.png',
         name: '玉米',
-        energy_0: 112,
-        energy_1: 1,
+        energy_0: 1,
+        energy_1: 4.148,
         tip: ['低能量', '低钙'],
         tab: [
           {
             title: '每100克',
-            energy_0: 84,
-            energy_1: 8,
+            energy_0: 1,
+            energy_1: 4.148,
             protein: {
               percentage: 60,
               weight: 60
@@ -124,8 +124,8 @@ export default {
           },
           {
             title: '每10克',
-            energy_0: 8.4,
-            energy_1: 0.8,
+            energy_0: 1,
+            energy_1: 4.148,
             protein: {
               percentage: 60,
               weight: 6
@@ -165,11 +165,37 @@ export default {
   computed: {
     foodName: function () {
       return store.state.foodDetails
+    },
+    DetailEnergy_0: function () {
+      return this.detail.energy_0
     }
   },
   watch: {
+    DetailEnergy_0: function (val) {
+      this.detail.energy_1 = val * 4.148
+      this.detail.energy_1 = Math.round(this.detail.energy_1)
+    },
     foodName: function (val) {
+      console.log('foodDetails', val)
       var that = this.detail
+      for (var e in val) {
+        if (val[e].nutrient == '蛋白质') {
+          that.tab[0].protein.weight = val[e].energy
+          that.tab[0].protein.percentage = val[e].energy
+        }
+        else if (val[e].nutrient == '脂肪') {
+          that.tab[0].fat.weight = val[e].energy
+          that.tab[0].fat.percentage = val[e].energy
+        }
+        else if (val[e].nutrient == '碳水化合物') {
+          that.tab[0].carbohydrate.weight = val[e].energy
+          that.tab[0].carbohydrate.percentage = val[e].energy
+        }
+      }
+
+      this.tab = that.tab[this.tabIndex]
+      this.setCanvas()
+
       that.name = val[0].name
       that.img = val[0].thumb
 
@@ -179,15 +205,28 @@ export default {
       }
 
       that.energy_0 = val[index].energy
-      that.energy_1 = that.energy_0 / 10
+      that.energy_1 = that.energy_0 * 4.148
+
+      var tab_0 = this.detail.tab[0]
+      var tab_1 = this.detail.tab[1]
+      tab_0.energy_0 = val[index].energy
+      tab_0.energy_1 = tab_0.energy_0 * 4.148
+      tab_1.energy_0 = tab_0.energy_0 / 10
+      tab_1.energy_1 = tab_0.energy_1 / 10
+      tab_1.protein.percentage = tab_0.protein.percentage
+      tab_1.fat.percentage = tab_0.fat.percentage
+      tab_1.carbohydrate.percentage = tab_0.carbohydrate.percentage
+      tab_1.protein.weight = tab_0.protein.weight / 10
+      tab_1.fat.weight = tab_0.fat.weight / 10
+      tab_1.carbohydrate.weight = tab_0.carbohydrate.weight / 10
     }
   },
-  created () {
-    this.tab = this.detail.tab[this.tabIndex]
-  },
   mounted () {
-    var that = this
-    that.setCanvas()
+    this.switchover = false
+    this.tabIndex = 0
+  },
+  onHide () {
+    store.commit('changeTest', 0)
   },
   methods: {
     tapIndex: function (index) {
@@ -196,7 +235,10 @@ export default {
         return
       else {
         that.tabIndex = index
-        that.tab = that.detail.tab[that.tabIndex]
+        that.tab = that.detail.tab[index]
+        that.detail.energy_0 = that.detail.tab[index].energy_0
+        that.detail.energy_1 = that.detail.tab[index].energy_1
+
         that.setCanvas()
       }
     },

@@ -90,8 +90,9 @@ export default {
 .index-bg {
   position: absolute;
   z-index: -1;
+  width: 100%;
 }
-.index-bg img {
+.index-bg image {
   width: 100%;
   height: 300rpx;
 }
@@ -101,7 +102,7 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 80rpx;
+  padding-top: 188rpx;
   padding-bottom: 40rpx;
 }
 .index-title img {
@@ -116,7 +117,7 @@ export default {
 }
 .input-search {
   display: flex;
-  margin-top: 16rpx;
+  margin-top: 20rpx;
   background-color: #fff;
   padding: 10rpx 16rpx;
   opacity: 0.83;

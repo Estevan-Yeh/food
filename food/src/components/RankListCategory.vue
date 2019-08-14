@@ -50,6 +50,7 @@ export default {
       }).then((res) => {
         store.commit('changeFoodDetails', res.data)
       })
+      store.commit('changeTest', 1)
       wx.navigateTo({ url: '../detail/main' });
     }
   },

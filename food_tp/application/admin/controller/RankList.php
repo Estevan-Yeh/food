@@ -20,8 +20,8 @@ class RankList extends Controller
         // 分页页数
         if (isset($_GET['sum']))
             $sum = $_GET['sum'];
-        $start = ($sum-1)*20;
-        $length = 20;  // 每页 20 个数据
+        $length = 15;  // 每页 15 个数据
+        $start = ($sum-1)*$length;
 
         // nutrient: 查询该 nutrient 的食物列表，不分 category
         if (isset($_GET['nutrient']) && $_GET['nutrient']!='') {

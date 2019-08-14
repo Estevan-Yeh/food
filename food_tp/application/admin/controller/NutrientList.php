@@ -20,8 +20,8 @@ class NutrientList extends Controller
         // 分页页数
         if (isset($_GET['sum']))
             $sum = $_GET['sum'];
-        $start = ($sum-1)*20;
-        $length = 20;  // 每页 20 个数据
+        $length = 15;  // 每页 15 个数据
+        $start = ($sum-1)*$length;
 
         // 根据前端发送的 category 返回对应的食物列表
         if (isset($_GET['category']) && $_GET['category']!='') {

@@ -15,22 +15,22 @@
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#999",
+    "color": "#333",
     "backgroundColor": "#fafafa",
-    "selectedColor": "#333",
+    "selectedColor": "#999",
     "borderStyle": "white",
     "list": [
       {
         "text": "首页",
         "pagePath": "pages/index/main",
-        "iconPath": "static/tabs/home.png",
-        "selectedIconPath": "static/tabs/home-active.png"
+        "iconPath": "static/tabs/index.png",
+        "selectedIconPath": "static/tabs/index-active.png"
       },
       {
         "text": "排行榜",
         "pagePath": "pages/rankPage/main",
-        "iconPath": "static/tabs/orders.png",
-        "selectedIconPath": "static/tabs/orders-active.png"
+        "iconPath": "static/tabs/order.png",
+        "selectedIconPath": "static/tabs/order-active.png"
       }
     ],
     "position": "bottom"
