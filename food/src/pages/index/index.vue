@@ -77,6 +77,7 @@ export default {
   methods: {
     toCategory: function (index) {
       var that = this.indexTable
+      store.commit('changeTest', 0)
       wx.navigateTo({ url: '../category/main?category=' + that[index] });
     },
     toSearchPage: function () {

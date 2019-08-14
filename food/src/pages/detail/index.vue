@@ -225,9 +225,6 @@ export default {
     this.switchover = false
     this.tabIndex = 0
   },
-  onHide () {
-    store.commit('changeTest', 0)
-  },
   methods: {
     tapIndex: function (index) {
       var that = this

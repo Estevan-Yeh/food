@@ -178,6 +178,11 @@ export default {
     tapArrange: function () {
       store.commit('changeCategorySum', 1)
       var that = this
+      var pages = getCurrentPages() //获取加载的页面
+      var currentPage = pages[pages.length - 1] //获取当前页面的对象
+      var url = currentPage.route //当前页面url
+      var category = currentPage.options.category //如果要获取url中所带的参数可以查看options
+      that.category = category
       that.unfold = false
       that.arrangeTxt = !that.arrangeTxt
       var nutrient = that.filtrateTitle != "排列方式" ? that.filtrateTitle : ""
